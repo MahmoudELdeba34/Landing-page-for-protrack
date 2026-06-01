@@ -55,6 +55,9 @@
     line-height: 1.7;
     overflow-x: hidden;
   }
+  body.sidebar-open {
+    overflow: hidden;
+  }
 
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
@@ -219,6 +222,12 @@
   }
   nav ul a:hover::after {
     width: 100%;
+  }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 110;
   }
   .nav-cta {
     background: linear-gradient(135deg, var(--accent), var(--cyan));
@@ -1420,25 +1429,33 @@
     background: rgba(10, 15, 30, 0.96);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
-    border-left: 1px solid var(--border);
-    border-right: 1px solid var(--border);
     z-index: 1000;
     display: flex;
     flex-direction: column;
     padding: 30px;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .mobile-sidebar-drawer.active {
+    visibility: visible;
+    pointer-events: auto;
   }
   [dir="rtl"] .mobile-sidebar-drawer {
     right: 0;
-    transform: translateX(100%);
+    transform: translateX(110%);
+    border-left: 1px solid var(--border);
+    border-right: none;
   }
   [dir="rtl"] .mobile-sidebar-drawer.active {
     transform: translateX(0);
   }
   [dir="ltr"] .mobile-sidebar-drawer {
     left: 0;
-    transform: translateX(-100%);
+    transform: translateX(-110%);
+    border-right: 1px solid var(--border);
+    border-left: none;
   }
   [dir="ltr"] .mobile-sidebar-drawer.active {
     transform: translateX(0);
@@ -1650,12 +1667,14 @@
     <li><a href="#faq">الأسئلة الشائعة</a></li>
     <li><a href="en.html" class="lang-switcher">English</a></li>
   </ul>
-  <button class="mobile-menu-toggle" aria-label="Toggle Menu" onclick="toggleMobileSidebar()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-  <a href="#cta" class="nav-cta btn">ابدأ مجاناً</a>
+  <div class="nav-actions">
+    <a href="#cta" class="nav-cta btn">ابدأ مجاناً</a>
+    <button class="mobile-menu-toggle" aria-label="Toggle Menu" onclick="toggleMobileSidebar()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- MOBILE SIDEBAR DRAWER -->
@@ -2611,9 +2630,12 @@
     const overlay = document.querySelector('.mobile-sidebar-overlay');
     const drawer = document.querySelector('.mobile-sidebar-drawer');
     const toggle = document.querySelector('.mobile-menu-toggle');
+    const body = document.body;
+    
     overlay.classList.toggle('active');
     drawer.classList.toggle('active');
     toggle.classList.toggle('active');
+    body.classList.toggle('sidebar-open');
   }
 
   // Close mobile sidebar drawer when clicking a link
@@ -2622,9 +2644,12 @@
       const overlay = document.querySelector('.mobile-sidebar-overlay');
       const drawer = document.querySelector('.mobile-sidebar-drawer');
       const toggle = document.querySelector('.mobile-menu-toggle');
+      const body = document.body;
+      
       overlay.classList.remove('active');
       drawer.classList.remove('active');
       toggle.classList.remove('active');
+      body.classList.remove('sidebar-open');
     });
   });
 
