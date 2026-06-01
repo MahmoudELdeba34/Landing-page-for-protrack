@@ -80,6 +80,7 @@
     inset: 0;
     pointer-events: none;
     z-index: 0;
+    overflow: hidden;
   }
   .grid-bg::after {
     content: '';
@@ -387,7 +388,8 @@
   section {
     position: relative;
     z-index: 10;
-    padding: 120px 8%;
+    padding: 60px 16px;
+    overflow: hidden;
   }
   .section-header {
     text-align: center;
@@ -1573,6 +1575,24 @@
     .timer-box {
       padding: 12px;
     }
+    .payslip-card {
+      padding: 20px 16px;
+    }
+    .calc-form {
+      padding: 20px 16px;
+    }
+    .payslip-title {
+      font-size: 14px;
+    }
+    .payslip-row {
+      font-size: 11px;
+    }
+    .payslip-row.total {
+      font-size: 13px;
+    }
+    .payslip-row.total .val {
+      font-size: 15px;
+    }
   }
 
   @media (min-width: 480px) {
@@ -1582,6 +1602,8 @@
   }
 
   @media (min-width: 768px) {
+    section { padding: 120px 8%; }
+    .calc-form, .payslip-card { padding: 30px; }
     nav { padding: 0 8%; }
     .mobile-menu-toggle { display: none; }
     nav ul {
@@ -1642,10 +1664,11 @@
 </head>
 <body>
 
-<div class="grid-bg"></div>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
+<div class="grid-bg">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
 
 
 
@@ -1653,7 +1676,7 @@
 <nav id="navbar">
   <a href="#" class="logo">
     <div class="logo-icon">
-      <img src="boodsolutions_logo.png" alt="ProTrack Logo">
+      <img src="boodsolutions_logo.png?v=2" alt="ProTrack Logo">
     </div>
     <div class="logo-text">Pro<span>Track</span></div>
   </a>
@@ -1681,7 +1704,7 @@
 <div class="mobile-sidebar-drawer">
   <div class="drawer-header">
     <a href="#" class="drawer-logo">
-      <img src="boodsolutions_logo.png" alt="ProTrack Logo" style="width: 28px; height: 28px;">
+      <img src="boodsolutions_logo.png?v=2" alt="ProTrack Logo" style="width: 28px; height: 28px;">
       <span>Pro<span>Track</span></span>
     </a>
     <button class="drawer-close" onclick="toggleMobileSidebar()">&times;</button>
@@ -2565,7 +2588,7 @@
     <div class="footer-brand">
       <a href="#" class="logo">
         <div class="logo-icon">
-          <img src="boodsolutions_logo.png" alt="ProTrack Logo">
+          <img src="boodsolutions_logo.png?v=2" alt="ProTrack Logo">
         </div>
         <div class="logo-text">Pro<span>Track</span></div>
       </a>
