@@ -44,6 +44,7 @@
   
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
@@ -465,18 +466,13 @@
   .dash-sidebar {
     display: flex;
     flex-direction: row;
-    overflow-x: auto;
+    flex-wrap: wrap;
+    justify-content: center;
     background: rgba(17, 24, 39, 0.4);
     border-bottom: 1px solid var(--border);
     padding: 8px;
     gap: 8px;
-    -webkit-overflow-scrolling: touch;
     width: 100%;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .dash-sidebar::-webkit-scrollbar {
-    display: none;
   }
   .dash-sidebar-logo {
     display: none;
