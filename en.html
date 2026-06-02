@@ -450,14 +450,22 @@
     padding: 16px 24px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    position: relative;
+  }
+  .dash-top-bar-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    z-index: 2;
   }
   .dot { width: 12px; height: 12px; border-radius: 50%; }
   .dot-red { background: var(--red); }
   .dot-yellow { background: var(--gold); }
   .dot-green { background: var(--green); }
   .dash-url {
-    margin-left: auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
@@ -466,6 +474,10 @@
     color: var(--text-muted);
     font-family: monospace;
     letter-spacing: 0.5px;
+    width: 40%;
+    text-align: center;
+    pointer-events: none;
+    z-index: 1;
   }
   
   .dash-body {
@@ -508,10 +520,11 @@
     border-bottom: 2px solid transparent;
   }
   .dash-nav-item.active {
-    background: rgba(79, 70, 229, 0.1);
-    color: var(--text);
+    background: rgba(6, 182, 212, 0.08);
+    color: #fff;
     border-bottom-color: var(--accent);
     font-weight: 700;
+    box-shadow: inset 0 0 10px rgba(6, 182, 212, 0.05);
   }
   .dash-nav-item:hover:not(.active) {
     background: rgba(255, 255, 255, 0.03);
@@ -611,6 +624,11 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 24px;
+    transition: var(--transition-fast);
+  }
+  .mini-card:hover {
+    border-color: rgba(6, 182, 212, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(6, 182, 212, 0.05);
   }
   .mini-title {
     font-size: 15px;
@@ -1593,6 +1611,11 @@
     .payslip-row.total .val {
       font-size: 15px;
     }
+    .dash-url {
+      font-size: 11px;
+      padding: 4px 10px;
+      width: 55%;
+    }
   }
 
   @media (min-width: 480px) {
@@ -1628,7 +1651,8 @@
       flex-direction: column;
       overflow-x: visible;
       background: rgba(17, 24, 39, 0.4);
-      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-left: none;
       border-bottom: none;
       padding: 24px 0;
       width: auto;
@@ -1778,9 +1802,11 @@
 
   <div class="dashboard-frame" data-aos="fade-up" data-aos-duration="1000">
     <div class="dash-top-bar">
-      <div class="dot dot-red"></div>
-      <div class="dot dot-yellow"></div>
-      <div class="dot dot-green"></div>
+      <div class="dash-top-bar-dots">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+      </div>
       <div class="dash-url">simulator.protrack.com/admin</div>
     </div>
     
