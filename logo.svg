@@ -1,0 +1,44 @@
+<svg viewBox="0 0 1000 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logo-grad" x1="10%" y1="90%" x2="90%" y2="10%">
+      <stop offset="0%" stop-color="#a3b4f7" />
+      <stop offset="35%" stop-color="#4d63df" />
+      <stop offset="70%" stop-color="#0a1bb5" />
+      <stop offset="100%" stop-color="#030b70" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Circle at Top Right -->
+  <circle cx="900" cy="115" r="100" fill="url(#logo-grad)" />
+  
+  <!-- Left Stem (Arch Shape) -->
+  <path d="M 65,900 
+           L 210,400 
+           C 250,290 380,310 430,370 
+           L 580,550 
+           C 610,590 590,640 540,680 
+           L 360,820 
+           Z" 
+        fill="url(#logo-grad)" />
+        
+  <!-- Right Loop (P-Loop with Inner Cutout) -->
+  <path fill-rule="evenodd" clip-rule="evenodd" 
+        d="M 120,120 
+           L 680,120 
+           C 770,120 830,180 830,270 
+           L 640,730 
+           C 610,800 550,800 480,800 
+           L 320,800 
+           L 460,560 
+           L 220,560 
+           L 120,120 
+           Z 
+           M 290,260 
+           L 590,260 
+           C 630,260 660,290 660,330 
+           L 550,520 
+           L 420,520 
+           L 290,260 
+           Z" 
+        fill="url(#logo-grad)" />
+</svg>
