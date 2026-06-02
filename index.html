@@ -3179,7 +3179,8 @@
   </div>
   
   <div class="contact-container" data-aos="fade-up" data-aos-delay="100">
-    <form id="contact-form" class="contact-form" action="send.php" method="POST">
+    <form id="contact-form" class="contact-form" action="https://formsubmit.co/boodagency@gmail.com" method="POST">
+      <input type="hidden" name="lang" value="ar">
       <div class="form-grid">
         <div class="form-group">
           <label class="form-label" for="contact-name">الاسم الكامل</label>
@@ -3746,7 +3747,7 @@
     });
   })();
 
-  // ── CONTACT FORM SUBMISSION (AJAX) ─────────────────────────────────────
+  // ── CONTACT FORM SUBMISSION (AJAX / FORMSUBMIT) ─────────────────────────
   (function() {
     const form = document.getElementById('contact-form');
     if (!form) return;
@@ -3754,6 +3755,13 @@
     const isEn = document.documentElement.lang === 'en';
 
     form.addEventListener('submit', function(e) {
+      const isLocalFile = window.location.protocol === 'file:';
+      
+      if (isLocalFile) {
+        // Under file://, AJAX is blocked. Fall back to standard FormSubmit redirect submit
+        return; 
+      }
+
       e.preventDefault();
       
       const originalText = btn.innerText;
@@ -3761,18 +3769,26 @@
       btn.innerText = isEn ? 'Sending Message...' : 'جاري إرسال الرسالة...';
       btn.style.opacity = '0.7';
 
-      const formData = new FormData(form);
+      const dataObj = {
+        name: form.querySelector('#contact-name').value,
+        email: form.querySelector('#contact-email').value,
+        phone: form.querySelector('#contact-phone').value,
+        subject: form.querySelector('#contact-subject').value,
+        message: form.querySelector('#contact-message').value,
+        _subject: isEn ? 'New Contact Inquiry (ProTrack)' : 'رسالة اتصال جديدة (ProTrack)'
+      };
 
-      fetch('send.php', {
+      fetch('https://formsubmit.co/ajax/boodagency@gmail.com', {
         method: 'POST',
         headers: {
-          'X-Requested-With': 'XMLHttpRequest'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: formData
+        body: JSON.stringify(dataObj)
       })
       .then(res => res.json())
       .then(data => {
-        if (data.success) {
+        if (data.success === 'true' || data.success === true) {
           Swal.fire({
             title: isEn ? 'Sent Successfully!' : 'تم الإرسال بنجاح!',
             text: isEn ? 'Thank you! Your message has been sent to our team.' : 'شكراً لك! تم إرسال رسالتك بنجاح وسنتواصل معك قريباً.',
@@ -3792,7 +3808,7 @@
         } else {
           Swal.fire({
             title: isEn ? 'Error!' : 'خطأ أثناء الإرسال!',
-            text: data.message,
+            text: data.message || (isEn ? 'An error occurred while sending.' : 'حدث خطأ غير متوقع أثناء الإرسال.'),
             icon: 'error',
             iconColor: 'var(--red)',
             customClass: {

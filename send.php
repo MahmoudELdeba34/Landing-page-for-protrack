@@ -13,6 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+$lang = isset($_POST['lang']) ? strip_tags(trim($_POST['lang'])) : 'ar';
+$redirect_file = ($lang === 'en') ? 'en.html' : 'index.html';
+
 $name = isset($_POST['name']) ? strip_tags(trim($_POST['name'])) : '';
 $email = isset($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL) : '';
 $phone = isset($_POST['phone']) ? strip_tags(trim($_POST['phone'])) : '';
@@ -24,7 +27,7 @@ if (empty($name) || empty($email) || empty($phone) || empty($message)) {
         header('Content-Type: application/json');
         echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
     } else {
-        header('Location: index.html?status=incomplete');
+        header("Location: {$redirect_file}?status=incomplete");
     }
     exit;
 }
@@ -34,7 +37,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         header('Content-Type: application/json');
         echo json_encode(['success' => false, 'message' => 'Invalid email address.']);
     } else {
-        header('Location: index.html?status=invalidemail');
+        header("Location: {$redirect_file}?status=invalidemail");
     }
     exit;
 }
@@ -61,14 +64,14 @@ if (mail($to, $email_subject, $email_content, $headers)) {
         header('Content-Type: application/json');
         echo json_encode(['success' => true, 'message' => 'Thank you! Your message has been sent successfully.']);
     } else {
-        header('Location: index.html?status=success');
+        header("Location: {$redirect_file}?status=success");
     }
 } else {
     if ($isAjax) {
         header('Content-Type: application/json');
         echo json_encode(['success' => false, 'message' => 'Oops! Something went wrong, and we couldn\'t send your message.']);
     } else {
-        header('Location: index.html?status=senderror');
+        header("Location: {$redirect_file}?status=senderror");
     }
 }
 ?>
