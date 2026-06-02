@@ -3089,8 +3089,8 @@
       <p>منصة مؤسسية ذكية تم إنشاؤها لتمكين الشركات الرقمية والفرق الموزعة من الوصول إلى أقصى مستويات الإنتاجية.</p>
       <div class="footer-newsletter">
         <span class="footer-newsletter-label">📩 ابقَ على اطلاع بآخر التحديثات</span>
-        <form class="footer-newsletter-form" action="#" onsubmit="event.preventDefault(); alert('شكراً لاشتراكك في نشرتنا البريدية!');">
-          <input type="email" class="footer-newsletter-input" placeholder="بريدك الإلكتروني..." required>
+        <form id="newsletter-form" class="footer-newsletter-form" action="https://formsubmit.co/boodagency@gmail.com" method="POST">
+          <input type="email" name="email" class="footer-newsletter-input" placeholder="بريدك الإلكتروني..." required>
           <button type="submit" class="footer-newsletter-btn">اشترك</button>
         </form>
       </div>
@@ -3531,6 +3531,53 @@
     }, { threshold: 0.4 });
     obs.observe(heroStats);
   }
+
+  // ── NEWSLETTER SUBMISSION (AJAX) ───────────────────────────────────────
+  (function() {
+    const form = document.getElementById('newsletter-form');
+    if (!form) return;
+    const input = form.querySelector('.footer-newsletter-input');
+    const btn = form.querySelector('.footer-newsletter-btn');
+    const isEn = document.documentElement.lang === 'en';
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Visual feedback: loading state
+      const originalText = btn.innerText;
+      btn.disabled = true;
+      btn.innerText = isEn ? 'Sending...' : 'جاري الإرسال...';
+      btn.style.opacity = '0.7';
+
+      const emailVal = input.value.trim();
+
+      fetch('https://formsubmit.co/ajax/boodagency@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          email: emailVal,
+          _subject: isEn ? 'New Subscription (ProTrack)' : 'اشتراك جديد في النشرة البريدية (ProTrack)'
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(isEn ? 'Thank you! You have successfully subscribed.' : 'شكراً لك! تم الاشتراك بنجاح في نشرتنا البريدية.');
+        form.reset();
+      })
+      .catch(err => {
+        // Fallback to standard form submission if AJAX fails
+        form.submit();
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerText = originalText;
+        btn.style.opacity = '1';
+      });
+    });
+  })();
 </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
