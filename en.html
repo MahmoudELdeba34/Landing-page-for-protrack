@@ -1896,6 +1896,47 @@
     .feature-card-num { font-size: 100px; }
   }
 
+  /* SWEETALERT2 PREMIUM DARK THEME OVERRIDE */
+  .premium-swal-popup {
+    background: #0b0f19 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: var(--radius-lg) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    font-family: 'Cairo', sans-serif !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+    padding: 30px !important;
+  }
+  .premium-swal-title {
+    color: #f9fafb !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    margin-top: 15px !important;
+  }
+  .premium-swal-content {
+    color: var(--text-muted) !important;
+    font-size: 14.5px !important;
+    line-height: 1.8 !important;
+    margin-top: 10px !important;
+  }
+  .premium-swal-confirm {
+    background: linear-gradient(135deg, var(--accent), var(--cyan)) !important;
+    color: #fff !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 10px 32px !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    border: none !important;
+    outline: none !important;
+    cursor: pointer !important;
+    margin-top: 15px !important;
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2) !important;
+    transition: var(--transition-fast) !important;
+  }
+  .premium-swal-confirm:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.35) !important;
+  }
 </style>
 </head>
 <body>
@@ -3396,7 +3437,21 @@
       })
       .then(res => res.json())
       .then(data => {
-        alert(isEn ? 'Thank you! You have successfully subscribed.' : 'شكراً لك! تم الاشتراك بنجاح في نشرتنا البريدية.');
+        Swal.fire({
+          title: isEn ? 'Subscribed!' : 'تم الاشتراك بنجاح!',
+          text: isEn ? 'Thank you! You have successfully subscribed to our newsletter.' : 'شكراً لك! تم الاشتراك بنجاح في نشرتنا البريدية.',
+          icon: 'success',
+          iconColor: 'var(--cyan)',
+          customClass: {
+            popup: 'premium-swal-popup',
+            title: 'premium-swal-title',
+            htmlContainer: 'premium-swal-content',
+            confirmButton: 'premium-swal-confirm'
+          },
+          background: '#0b0f19',
+          buttonsStyling: false,
+          confirmButtonText: isEn ? 'Excellent' : 'ممتاز'
+        });
         form.reset();
       })
       .catch(err => {
@@ -3411,6 +3466,7 @@
     });
   })();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
   AOS.init({
